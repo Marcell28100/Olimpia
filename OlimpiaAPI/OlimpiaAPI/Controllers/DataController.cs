@@ -34,5 +34,28 @@ namespace OlimpiaAPI.Controllers
 
             return BadRequest();
         }
+        [HttpGet]
+        public ActionResult<Data> Get()
+        {
+            using (var context = new OlimpiaContext())
+            {
+                return Ok(context.Data.ToList());
+
+            }
         }
+
+        [HttpGet("{id}")]
+        public ActionResult<Player> GetById(Guid id)
+        {
+            using (var context = new OlimpiaContext())
+            {
+                var player = context.Players.FirstOrDefault(playerTable=> playerTable.Id == id);
+                if (player != null)
+                {
+                    return Ok(player);
+                }
+                return NotFound();
+            }
+        }
+    }
 }

@@ -21,9 +21,9 @@ namespace OlimpiaAPI.Controllers
                 CreatedTime = DateTime.Now
             };
 
-            if(player != null)
+            if (player != null)
             {
-                using(var context = new OlimpiaContext())
+                using (var context = new OlimpiaContext())
                 {
                     context.Players.Add(player);
                     context.SaveChanges();
@@ -33,5 +33,52 @@ namespace OlimpiaAPI.Controllers
 
             return BadRequest();
         }
+
+        [HttpGet]
+        public ActionResult<Player> Get()
+        {
+            using (var context = new OlimpiaContext())
+            {
+                return Ok(context.Players.ToList());
+
+            }
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<Player> GetById(Guid id)
+        {
+            using (var context = new OlimpiaContext())
+            {
+                var player = context.Players.FirstOrDefault(playerTable => playerTable.Id == id);
+                if (player != null)
+                {
+                    return Ok(player);
+                }
+                return NotFound();
+            }
+        }
+
+        [HttpPut("{id}")]
+         
+        public ActionResult<Player> Put(UpdatePlayerDto updatePlayer, Guid id)
+        {
+            using(var context = new OlimpiaContext())
+            {
+                var existingPlayer = context.Players.FirstOrDefault(player => player.Id == id);
+                if (existingPlayer != null)
+                {
+                    existingPlayer.Name = updatePlayer.Name;
+                    existingPlayer.Age = updatePlayer.Age;
+                    existingPlayer.Height = updatePlayer.Height;
+                    existingPlayer.Weight = updatePlayer.Height;
+                    context.Players.Add(existingPlayer);
+                    context.SaveChanges();
+                    return Ok(existingPlayer);
+                }
+                return NotFound();
+            }
+
+        }
     }
+        
 }
