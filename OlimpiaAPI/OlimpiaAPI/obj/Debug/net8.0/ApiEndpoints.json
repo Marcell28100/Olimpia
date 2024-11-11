@@ -1,5 +1,31 @@
 [
   {
+    "ContainingType": "OlimpiaAPI.Controllers.DataController",
+    "Method": "Post",
+    "RelativePath": "data",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "createData",
+        "Type": "OlimpiaAPI.Models.CreateDataDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "OlimpiaAPI.Models.Data",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "OlimpiaAPI.Controllers.PlayerController",
     "Method": "Post",
     "RelativePath": "players",

@@ -15,7 +15,7 @@ public partial class OlimpiaContext : DbContext
     {
     }
 
-    public virtual DbSet<Datum> Data { get; set; }
+    public virtual DbSet<Data> Data { get; set; }
 
     public virtual DbSet<Player> Players { get; set; }
 
@@ -25,7 +25,7 @@ public partial class OlimpiaContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Datum>(entity =>
+        modelBuilder.Entity<Data>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
