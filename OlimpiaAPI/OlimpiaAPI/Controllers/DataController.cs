@@ -57,6 +57,7 @@ namespace OlimpiaAPI.Controllers
                 return NotFound();
             }
         }
+        [HttpPut]
         public ActionResult<Data> Put(UpdateDataDto updateData, Guid id)
         {
             using (var context = new OlimpiaContext())
@@ -89,7 +90,7 @@ namespace OlimpiaAPI.Controllers
                 {
                     context.Data.Remove(data);
                     context.SaveChanges();
-                    return Ok(new { message = "Sikeres Törlés!" });
+                    return Ok(new{ message = "Sikeres Törlés!" });
                 }
                 return NotFound();
             }

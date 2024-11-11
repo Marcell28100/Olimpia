@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OlimpiaAPI.Models;
 
 namespace OlimpiaAPI.Controllers
@@ -92,11 +93,25 @@ namespace OlimpiaAPI.Controllers
                 {
                     context.Players.Remove(player);
                     context.SaveChanges();
-                    return Ok(new { message = "Sikeres Törlés!"});
+                    return Ok(new{ message = "Sikeres Törlés!"});
                 }
                 return NotFound();
             }
 
+        }
+        [HttpGet("playerdata/{id}")]
+
+        public ActionResult<Player> Get(Guid id)
+        {
+            using (var context = new OlimpiaContext())
+            {
+                var player = context.Players.Include(x => x.Data).FirstOrDefault(x => x.Id == id);
+                if (player != null)
+                {
+                    return Ok(player);
+                }
+                return NotFound();
+            }
         }
 
     }
