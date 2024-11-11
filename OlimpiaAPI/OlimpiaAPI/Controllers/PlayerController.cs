@@ -79,6 +79,26 @@ namespace OlimpiaAPI.Controllers
             }
 
         }
+
+        [HttpDelete]
+
+        public ActionResult<Player> Delete(Guid Id)
+        {
+            using(var context = new OlimpiaContext())
+            {
+                var player = context.Players.FirstOrDefault(player => player.Id == Id);
+
+                if (player != null)
+                {
+                    context.Players.Remove(player);
+                    context.SaveChanges();
+                    return Ok(new { message = "Sikeres Törlés!"});
+                }
+                return NotFound();
+            }
+
+        }
+
     }
         
 }

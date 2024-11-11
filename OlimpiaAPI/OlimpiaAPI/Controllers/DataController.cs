@@ -57,5 +57,43 @@ namespace OlimpiaAPI.Controllers
                 return NotFound();
             }
         }
+        public ActionResult<Data> Put(UpdateDataDto updateData, Guid id)
+        {
+            using (var context = new OlimpiaContext())
+            {
+                var existingData = context.Data.FirstOrDefault(data => data.Id == id);
+                if (existingData != null)
+                {
+                    existingData.Country = updateData.Country;
+                    existingData.County = updateData.County;
+                    existingData.Description = updateData.Description;
+                    existingData.UpdatedTime = DateTime.Now;
+
+                    context.Data.Add(existingData);
+                    context.SaveChanges();
+                    return Ok(existingData);
+                }
+                return NotFound();
+            }
+
+        }
+        [HttpDelete]
+
+        public ActionResult<Data> Delete(Guid Id)
+        {
+            using (var context = new OlimpiaContext())
+            {
+                var data = context.Data.FirstOrDefault(data => data.Id == Id);
+
+                if (data != null)
+                {
+                    context.Data.Remove(data);
+                    context.SaveChanges();
+                    return Ok(new { message = "Sikeres Törlés!" });
+                }
+                return NotFound();
+            }
+
+        }
     }
 }
